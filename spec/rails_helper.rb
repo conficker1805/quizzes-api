@@ -1,3 +1,4 @@
+require 'supports/request_helper'
 require 'simplecov'
 SimpleCov.start 'rails'
 
@@ -66,6 +67,8 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.render_views = true
+  config.include RequestHelper
+
   Shoulda::Matchers.configure do |config|
     config.integrate do |with|
       with.test_framework :rspec
