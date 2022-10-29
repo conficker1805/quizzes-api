@@ -38,6 +38,39 @@ describe AuthService do
     end
   end
 
+  describe '#auth_request!' do
+    let(:valid_headers) { valid_headers_for(user) }
+    let(:invalid_headers) { { 'Authorization' => 'invalid' } }
+
+    context 'when authenticating user successfully' do
+      it 'returns authenticated user' do
+        expect(described_class.auth_request!(valid_headers)).to eq user
+      end
+    end
+
+    context 'when access token is missing' do
+      it 'returns error' do
+        expect { described_class.auth_request!({}) }.to raise_error(Exceptions::MissingToken)
+      end
+    end
+
+    context 'when access token is INVALID' do
+      it 'returns error' do
+        expect { described_class.auth_request!(invalid_headers) }.to raise_error(Exceptions::InvalidToken)
+      end
+    end
+
+    context 'when the user is not found' do
+      before do
+        allow(described_class).to receive(:decrypted_token).and_return({ user_id: 0 })
+      end
+
+      it 'returns error' do
+        expect { described_class.auth_request!({}) }.to raise_error(Exceptions::InvalidToken)
+      end
+    end
+  end
+
   describe '#find_user' do
     context 'when email does not exist' do
       it 'returns errors' do

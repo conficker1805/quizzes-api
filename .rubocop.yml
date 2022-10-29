@@ -217,3 +217,7 @@ Naming/MemoizedInstanceVariableName:
 Style/LambdaCall:
   Exclude:
     - app/views/**/*.jbuilder
+
+RSpec/NamedSubject:
+  Exclude:
+    - spec/api/**/*controller_spec.rb
