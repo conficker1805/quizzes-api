@@ -8,5 +8,5 @@ class User < ApplicationRecord
          :validatable
 
   # Associations
-  has_many :exams, class_name: 'User::Answer'
+  has_many :assessments, dependent: :destroy
 end

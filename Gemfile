@@ -43,6 +43,9 @@ gem 'friendly_id', '~> 5.4.0'
 gem "devise"
 gem "jwt"
 
+# Enumerated attributes
+gem 'enumerize'
+
 # Code coverage analysis tool
 gem 'simplecov', require: false, group: :test
 
