@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe User, type: :model do
+describe User do
   describe 'Associations' do
-    it { should have_many :assessments }
+    it { is_expected.to have_many :assessments }
   end
 end

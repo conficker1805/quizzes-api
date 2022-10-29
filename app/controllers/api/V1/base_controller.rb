@@ -15,10 +15,9 @@ module Api
 
       protected
 
-      def page
-        params[:page] || 1
-      end
+        def page
+          params[:page] || 1
+        end
     end
   end
 end
-

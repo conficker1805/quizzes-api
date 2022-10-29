@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe Assessment, type: :model do
+describe Assessment do
   describe 'Associations' do
-    it { should belong_to :user }
-    it { should belong_to :domain }
+    it { is_expected.to belong_to :user }
+    it { is_expected.to belong_to :domain }
   end
 end

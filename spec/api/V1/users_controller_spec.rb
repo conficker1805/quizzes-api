@@ -3,7 +3,7 @@ require 'rails_helper'
 
 describe Api::V1::UsersController, type: :controller do
   describe 'POST #sign_in' do
-    let(:user) { create :user, password: 'a_valid_password' }
+    let(:user) { create(:user, password: 'a_valid_password') }
 
     def login_params(password = 'a_valid_password')
       {

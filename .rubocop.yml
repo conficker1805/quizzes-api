@@ -213,3 +213,7 @@ Naming/AccessorMethodName:
 
 Naming/MemoizedInstanceVariableName:
   Enabled: false
+
+Style/LambdaCall:
+  Exclude:
+    - app/views/**/*.jbuilder

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe Domain, type: :model do
+describe Domain do
   describe 'Associations' do
-    it { should have_many :quizzes }
+    it { is_expected.to have_many :quizzes }
   end
 end

@@ -3,9 +3,7 @@ require 'rails_helper'
 
 describe Api::V1::DomainsController, type: :controller do
   describe 'GET #index' do
-    before do
-      FactoryBot.create_list(:domain, 7)
-    end
+    before { create_list(:domain, 7) }
 
     def do_request(params = {})
       get :index, params: params
@@ -14,16 +12,14 @@ describe Api::V1::DomainsController, type: :controller do
     context 'without params' do
       it 'returns list of Domain with pagination' do
         do_request
-        expect(response_data_type).to eq 'Domain'
-        expect(response_attributes.size).to eq 5
+        expect(response_data.size).to eq 5
       end
     end
 
     context 'with params' do
       it 'returns list of Domain with pagination' do
         do_request(page: 2)
-        expect(response_data_type).to eq 'Domain'
-        expect(response_attributes.size).to eq 2
+        expect(response_data.size).to eq 2
       end
     end
   end

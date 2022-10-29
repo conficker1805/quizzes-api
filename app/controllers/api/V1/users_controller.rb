@@ -7,9 +7,9 @@ module Api
 
       private
 
-      def auth_params
-        params.require(:user).permit(:email, :password)
-      end
+        def auth_params
+          params.require(:user).permit(:email, :password)
+        end
     end
   end
 end

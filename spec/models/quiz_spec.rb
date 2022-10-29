@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe Quiz, type: :model do
+describe Quiz do
   describe 'Associations' do
-    it { should have_many :answers }
-    it { should belong_to :domain }
+    it { is_expected.to have_many :answers }
+    it { is_expected.to belong_to :domain }
   end
 end
