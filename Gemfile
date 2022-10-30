@@ -9,6 +9,9 @@ gem "rails", "~> 7.0.4"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
+# Store nested hashes in hstores in ActiveRecord
+gem 'nested-hstore'
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
@@ -41,6 +44,9 @@ gem 'kaminari'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem "rack-cors"
+
+# AASM - State machines
+gem 'aasm'
 
 # Authentication
 gem "devise"

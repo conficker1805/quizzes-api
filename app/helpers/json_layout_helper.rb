@@ -2,11 +2,17 @@ module JsonLayoutHelper
   def json_template(json = {}, resource = nil)
     return json.data { yield if block_given? } if !resource || resource.errors.empty?
 
-    errors = resource.errors.errors.map do |e|
-      message = resource.errors.generate_message(e.attribute, e.type)
-      { attribute: e.attribute, error: e.type, message: message }
-    end
+    json.errors json_errors(resource)
+  end
 
-    json.errors errors
+  def json_errors(resource)
+    e = resource.errors.errors.first
+
+    {
+      attribute: e.attribute,
+      error: e.type,
+      message: resource.errors.generate_message(e.attribute, e.type),
+      messageKey: "exceptions.activerecord.#{resource.class.name.downcase}.#{e.attribute}.#{e.type}"
+    }
   end
 end

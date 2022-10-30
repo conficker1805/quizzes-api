@@ -6,3 +6,14 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+%w[answers assessments domains quizzes users].each do |table_name|
+  ActiveRecord::Base.connection.execute("TRUNCATE #{table_name} RESTART IDENTITY")
+end
+
+# Create Users
+User.create!(email: 'kevin.luu1805@gmail.com', name: 'Kevin', password: '123123123')
+User.create!(email: 'user@example.com', name: 'Tony', password: '123123123')
+
+# Create Domains, Quizzes and Answers
+FactoryBot.create_list(:domain, 7, :with_quizzes)

@@ -30,6 +30,13 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  activerecord:
+    errors:
+      models:
+        assessment:
+          attributes:
+            answers:
+              answers_are_invalid: Answers format is invalid.
   shared:
     other:
       something_wrong: "System Error, please contact admin for more information"

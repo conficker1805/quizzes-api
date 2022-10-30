@@ -1,16 +1,18 @@
 class Assessment < ApplicationRecord
-  extend Enumerize
+  include AASM
 
-  store_accessor :expectation
-  store_accessor :answers
-
+  # Number of quizzes in assessment
   NUM_OF_QUESTIONS = 5
+
+  # Time to finish the assessment
   TIME_IN_MINUTES = 5
 
-  enumerize :state, in: %i[processing done expired], default: :processing
+  serialize :expectation, ActiveRecord::Coders::NestedHstore
+  serialize :answers, ActiveRecord::Coders::NestedHstore
 
   # Callbacks
   before_validation :set_time_allowed
+  before_validation :format_answers, on: :update
 
   # Associations
   belongs_to :user
@@ -18,11 +20,43 @@ class Assessment < ApplicationRecord
 
   # Validations
   validates :expectation, :state, :started_at, :ended_at, presence: true
+  validate :valid_user_answers, on: :update
+
+  # State machine
+  aasm column: :state do
+    state :processing, initial: true
+    state :completed, :expired
+
+    event :complete do
+      transitions from: :processing, to: :completed
+    end
+
+    event :expire do
+      transitions from: :processing, to: :expired
+    end
+  end
+
+  def quizzes
+    Quiz.where(id: expectation.keys.map(&:to_i))
+  end
 
   private
 
     def set_time_allowed
       self.started_at = Time.current
       self.ended_at = started_at + TIME_IN_MINUTES.minutes
+    end
+
+    def format_answers
+      self.answers = answers.transform_values! { |v| v.map(&:to_i) }
+    end
+
+    def valid_user_answers
+      # If user's answers do not match given questions
+      union_answers = (expectation.keys | answers.keys)
+
+      return if expectation.keys.sort == union_answers.sort
+
+      errors.add(:answers, :answers_are_invalid)
     end
 end

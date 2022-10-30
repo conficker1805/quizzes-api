@@ -10,7 +10,7 @@ module Quizzes
     def call
       hash = {}
       @quizzes.sort.map do |quiz|
-        hash[quiz.id] = quiz.answers.select { |a| a.correct == true }
+        hash[quiz.id] = quiz.answers.select { |a| a.correct == true }.map(&:id)
       end
 
       hash

@@ -9,6 +9,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (5.4.0)
+      concurrent-ruby (~> 1.0)
     actioncable (7.0.4)
       actionpack (= 7.0.4)
       activesupport (= 7.0.4)
@@ -143,6 +145,9 @@ GEM
     mini_portile2 (2.8.0)
     minitest (5.16.3)
     msgpack (1.6.0)
+    nested-hstore (0.1.2)
+      activerecord
+      activesupport
     net-imap (0.3.1)
       net-protocol
     net-pop (0.1.2)
@@ -262,6 +267,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm
   activerecord-analyze
   bootsnap
   bullet
@@ -274,6 +280,7 @@ DEPENDENCIES
   jbuilder
   jwt
   kaminari
+  nested-hstore
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4)

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
       resources :domains, only: %i[index]
 
-      resources :assessments, only: %i[create]
+      resources :assessments, only: %i[create update]
     end
   end
 end

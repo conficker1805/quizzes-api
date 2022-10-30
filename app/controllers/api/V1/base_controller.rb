@@ -6,6 +6,7 @@ module Api
       attr_reader :current_user
 
       helper JsonLayoutHelper
+      helper AssessmentHelper
 
       respond_to :json
 
