@@ -1,20 +1,25 @@
 module Api
   module V1
     class AssessmentsController < BaseController
-      def create
-        # assessment = Assessment.new(assessment_params)
+      before_action :authorize_request
 
-        # if @assessment.save
-        #   redirect_to assessment_path(@assessment), notice: t('flash_message.assessment.create.success')
-        # else
-        #   render :new
-        # end
+      def create
+        domain = Domain.find(domain_id)
+
+        @quizzes = Quizzes::RandomQuery.new(domain).call
+
+        @assessment = current_user.assessments.new(
+          domain: domain,
+          expectation: Quizzes::RightAnswerService.new(@quizzes).call
+        )
+
+        @assessment.save
       end
 
       private
 
-        def assessment_params
-          params.require(:assessment).permit(:domain_id)
+        def domain_id
+          params.require(:domain_id)
         end
     end
   end

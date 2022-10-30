@@ -1,5 +1,4 @@
 require 'rails_helper'
-# require 'shared/authenticate_user'
 
 describe Api::V1::UsersController, type: :controller do
   describe 'POST #sign_in' do

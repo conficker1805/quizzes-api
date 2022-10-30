@@ -2,7 +2,7 @@ class AuthService
   SECRET = Rails.application.secrets.secret_key_base
 
   class << self
-    attr_reader :headers, :user
+    attr_reader :headers
 
     def auth_user!(params)
       raise Exceptions::AuthenticationError unless params[:email] && params[:password] && find_user(params)

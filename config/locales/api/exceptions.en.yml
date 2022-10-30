@@ -12,3 +12,6 @@ en:
       action_controller:
         parameter_missing:
           message: Bad request. Invalid parameters.
+      active_record:
+        record_not_found:
+          message: Resource not found.

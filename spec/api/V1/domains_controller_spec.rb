@@ -1,5 +1,4 @@
 require 'rails_helper'
-# require 'shared/authenticate_user'
 
 describe Api::V1::DomainsController, type: :controller do
   describe 'GET #index' do

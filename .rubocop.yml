@@ -221,3 +221,7 @@ Style/LambdaCall:
 RSpec/NamedSubject:
   Exclude:
     - spec/api/**/*controller_spec.rb
+
+RSpec/SubjectStub:
+  Exclude:
+    - spec/shared/**/*.rb
