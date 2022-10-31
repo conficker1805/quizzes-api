@@ -11,8 +11,9 @@ class Assessment < ApplicationRecord
   serialize :answers, ActiveRecord::Coders::NestedHstore
 
   # Callbacks
-  before_validation :set_time_allowed
+  before_validation :set_time_allowed, on: :create
   before_validation :format_answers, on: :update
+  after_create :auto_expire_after_time
 
   # Associations
   belongs_to :user
@@ -58,5 +59,12 @@ class Assessment < ApplicationRecord
       return if expectation.keys.sort == union_answers.sort
 
       errors.add(:answers, :answers_are_invalid)
+    end
+
+    def auto_expire_after_time
+      # User may close the browse and does not submit their answer
+      # so we have to check and expire it at ended_time + 1 minutes
+      num_of_minutes = (TIME_IN_MINUTES + 1).minutes
+      Assessments::ExpireWorker.perform_in(num_of_minutes)
     end
 end

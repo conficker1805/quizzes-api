@@ -1,5 +1,8 @@
 require 'supports/request_helper'
 require 'simplecov'
+require 'sidekiq/testing'
+
+Sidekiq::Testing.fake!
 SimpleCov.start 'rails'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
@@ -76,12 +79,13 @@ RSpec.configure do |config|
     end
   end
 
-  if Bullet.enable?
-    config.before(:each) do
-      Bullet.start_request
-    end
+  config.before(:each) do
+    Sidekiq::Worker.clear_all
+    Bullet.start_request if Bullet.enable?
+  end
 
-    config.after(:each) do
+  config.after(:each) do
+    if Bullet.enable?
       Bullet.perform_out_of_channel_notifications if Bullet.notification?
       Bullet.end_request
     end
