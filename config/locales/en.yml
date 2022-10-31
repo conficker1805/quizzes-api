@@ -37,6 +37,8 @@ en:
           attributes:
             answers:
               answers_are_invalid: Answers format is invalid.
+            user_id:
+              taken: You are doing another assessment. Please finish it before starting another.
   shared:
     other:
       something_wrong: "System Error, please contact admin for more information"

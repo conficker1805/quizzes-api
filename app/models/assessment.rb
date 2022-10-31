@@ -21,6 +21,7 @@ class Assessment < ApplicationRecord
 
   # Validations
   validates :expectation, :state, :started_at, :ended_at, presence: true
+  validates :user_id, uniqueness: { scope: :state }, if: -> { processing? }
   validate :valid_user_answers, on: :update
 
   # State machine

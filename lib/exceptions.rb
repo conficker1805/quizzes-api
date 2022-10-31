@@ -19,7 +19,7 @@ module Exceptions
   end
 
   included do
-    rescue_from(*(CUSTOM_ERRORS + RAILS_ERRORS), with: :json_error_message)
+    rescue_from(*(CUSTOM_ERRORS + RAILS_ERRORS), with: :render_api_error)
     rescue_from(ActiveRecord::RecordInvalid, with: :render_model_errors)
   end
 
@@ -41,7 +41,7 @@ module Exceptions
              status: :unprocessable_entity
     end
 
-    def json_error_message(exception)
+    def render_api_error(exception)
       @translation = exception.class.name.split('::').map(&:underscore).join('.')
       @translation.prepend(prefix) unless @translation.start_with?(prefix)
       @message = I18n.t("#{@translation}.message", scope: 'api')

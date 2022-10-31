@@ -30,7 +30,38 @@ describe Api::V1::AssessmentsController, type: :controller do
       end
     end
 
+    context 'when user try to do multiple assessments at same time' do
+      let(:error_message) { 'You are doing another assessment. Please finish it before starting another.' }
+
+      before do
+        create(:assessment, domain: domain, user: user, state: :processing)
+      end
+
+      it 'returns error' do
+        do_request({ domain_id: domain.id })
+        expect(response_status).to eq 422
+        expect(response_error_message).to eq error_message
+      end
+    end
+
     context 'when assessment is VALID' do
+      it 'returns assignment' do
+        do_request({ domain_id: domain.id })
+        expect(response_status).to eq 200
+        expect(response_data_type).to eq 'Assessment'
+        expect(response_attributes[:userId]).to eq user.id
+        expect(response_attributes[:state]).to eq 'processing'
+        expect(response_attributes[:domainId]).to eq domain.id
+        expect(response_attributes[:quizzes].size).to eq 5
+        expect(response_attributes[:expectation]).to be_nil
+      end
+    end
+
+    context 'when assessment is VALID and no assessments are processing' do
+      before do
+        create(:assessment, domain: domain, user: user, state: :completed)
+      end
+
       it 'returns assignment' do
         do_request({ domain_id: domain.id })
         expect(response_status).to eq 200
