@@ -20,6 +20,7 @@ describe Api::V1::UsersController, type: :controller do
     context 'without params' do
       it 'returns errror' do
         do_request({})
+        expect(response_status).to eq 400
         expect(response_error_message).to eq 'Bad request. Invalid parameters.'
       end
     end
@@ -31,6 +32,7 @@ describe Api::V1::UsersController, type: :controller do
 
       it 'returns authentication error' do
         do_request(login_params('invalid_password'))
+        expect(response_status).to eq 401
         expect(response_error_message).to eq 'Authentication Failed. Please try again!'
       end
     end
@@ -42,6 +44,7 @@ describe Api::V1::UsersController, type: :controller do
 
       it 'returns Access Token' do
         do_request
+        expect(response_status).to eq 200
         expect(response_data_type).to eq 'AccessToken'
         expect(response_attributes[:accessToken]).to be_an String
       end

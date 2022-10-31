@@ -7,13 +7,16 @@ en:
         status: 401
       missing_token:
         message: Token is missing.
+        status: 401
       invalid_token:
         message: Token is invalid.
+        status: 401
       action_controller:
         parameter_missing:
           message: Bad request. Invalid parameters.
       active_record:
         record_not_found:
+          status: 404
           message: Resource not found.
       assessment_time_out:
         message: The assessment has been ended

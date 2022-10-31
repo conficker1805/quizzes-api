@@ -1,0 +1,405 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/assessments":
+    post:
+      summary: Start doing an assessment
+      parameters:
+      - name: domain_id
+        in: query
+        description: Domain id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Return assessment:
+                  value:
+                    data:
+                      type: Assessment
+                      attributes:
+                        id: 451
+                        userId: 1761
+                        domainId: 1510
+                        state: processing
+                        startedAt: '2022-10-31T07:36:06.701Z'
+                        endedAt: '2022-10-31T07:41:06.701Z'
+                        quizzes:
+                        - type: Quiz
+                          id: 8755
+                          content: Dignissimos corporis iusto. Voluptatem tempore
+                            sit.
+                          answers:
+                          - type: Answer
+                            id: 35017
+                            quizId: 8755
+                            content: Cupiditate rerum dolore.
+                          - type: Answer
+                            id: 35018
+                            quizId: 8755
+                            content: Vero molestiae dolores iusto.
+                          - type: Answer
+                            id: 35019
+                            quizId: 8755
+                            content: Quia commodi aut illo.
+                          - type: Answer
+                            id: 35020
+                            quizId: 8755
+                            content: Consequuntur voluptates est in.
+                        - type: Quiz
+                          id: 8759
+                          content: Provident eum fuga. Totam similique voluptatem.
+                            Nesciunt laborum officiis.
+                          answers:
+                          - type: Answer
+                            id: 35033
+                            quizId: 8759
+                            content: Error eaque et esse.
+                          - type: Answer
+                            id: 35034
+                            quizId: 8759
+                            content: Error nesciunt enim voluptate.
+                          - type: Answer
+                            id: 35035
+                            quizId: 8759
+                            content: Beatae enim rerum incidunt.
+                          - type: Answer
+                            id: 35036
+                            quizId: 8759
+                            content: Cumque laudantium iure qui.
+                        - type: Quiz
+                          id: 8760
+                          content: Velit autem aut. Quo consequatur saepe. Tempore
+                            odio ut.
+                          answers:
+                          - type: Answer
+                            id: 35037
+                            quizId: 8760
+                            content: Qui tenetur provident magnam.
+                          - type: Answer
+                            id: 35038
+                            quizId: 8760
+                            content: Fugit officia atque nemo.
+                          - type: Answer
+                            id: 35039
+                            quizId: 8760
+                            content: Fugiat alias id et.
+                          - type: Answer
+                            id: 35040
+                            quizId: 8760
+                            content: In commodi minima debitis.
+                        - type: Quiz
+                          id: 8745
+                          content: Atque ab voluptatem. Sint non ad. Quos qui aut.
+                          answers:
+                          - type: Answer
+                            id: 34977
+                            quizId: 8745
+                            content: Aut in dolor et.
+                          - type: Answer
+                            id: 34978
+                            quizId: 8745
+                            content: Et velit expedita minus.
+                          - type: Answer
+                            id: 34979
+                            quizId: 8745
+                            content: Omnis voluptatem similique.
+                          - type: Answer
+                            id: 34980
+                            quizId: 8745
+                            content: Sed ipsum qui eius.
+                        - type: Quiz
+                          id: 8752
+                          content: Eos animi quia. Ipsam commodi dicta. Minima ipsam
+                            occaecati.
+                          answers:
+                          - type: Answer
+                            id: 35005
+                            quizId: 8752
+                            content: Maiores nisi quas excepturi.
+                          - type: Answer
+                            id: 35006
+                            quizId: 8752
+                            content: Numquam dignissimos nostrum.
+                          - type: Answer
+                            id: 35007
+                            quizId: 8752
+                            content: Voluptas corporis quibusdam est.
+                          - type: Answer
+                            id: 35008
+                            quizId: 8752
+                            content: Ut dolores aut aut.
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              examples:
+                Domain name is missing:
+                  value:
+                    errors:
+                      message: Bad request. Invalid parameters.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                Domain id is invalid:
+                  value:
+                    errors:
+                      message: Resource not found.
+  "/api/v1/assessments/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Assessment id
+      required: true
+      schema:
+        type: string
+    - in: body
+      schema:
+        type: object
+        properties:
+          answers:
+            type: array
+        example:
+          answers:
+          - '1':
+            - 1
+            '2':
+            - 2
+            '3':
+            - 3
+            '4':
+            - 4
+            '5':
+            - 5
+        required:
+        - email
+        - password
+    put:
+      summary: Submit answers for an Assessment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Return assessment:
+                  value:
+                    data:
+                      type: Assessment
+                      attributes:
+                        id: 648
+                        userId: 2264
+                        domainId: 1941
+                        state: completed
+                        startedAt: '2022-10-31T09:44:10.765Z'
+                        endedAt: '2022-10-31T09:49:10.765Z'
+                        expectation:
+                          '12326':
+                          - 49301
+                          '12327':
+                          - 49305
+                          '12328':
+                          - 49309
+                          '12332':
+                          - 49325
+                          '12340':
+                          - 49357
+                        answers:
+                          '12326':
+                          - 49301
+                          '12327':
+                          - 49305
+                          '12328':
+                          - 49309
+                          '12332':
+                          - 49325
+                          '12340':
+                          - 49357
+                        score: 5/5
+                        quizzes:
+                        - type: Quiz
+                          id: 12326
+                          content: Qui dolorem deserunt. Asperiores animi sed. Accusantium
+                            placeat qui.
+                          answers:
+                          - type: Answer
+                            id: 49301
+                            quizId: 12326
+                            content: Eum sit earum exercitationem.
+                          - type: Answer
+                            id: 49302
+                            quizId: 12326
+                            content: Reprehenderit et aut nam.
+                          - type: Answer
+                            id: 49303
+                            quizId: 12326
+                            content: Enim similique est est.
+                          - type: Answer
+                            id: 49304
+                            quizId: 12326
+                            content: Reiciendis deserunt ipsum harum.
+                        - type: Quiz
+                          id: 12327
+                          content: Ab sunt quisquam. Consequatur eligendi excepturi.
+                            Aut officia voluptatem.
+                          answers:
+                          - type: Answer
+                            id: 49305
+                            quizId: 12327
+                            content: Amet cum molestiae repellat.
+                          - type: Answer
+                            id: 49306
+                            quizId: 12327
+                            content: Qui natus ut maiores.
+                          - type: Answer
+                            id: 49307
+                            quizId: 12327
+                            content: Qui cum possimus accusantium.
+                          - type: Answer
+                            id: 49308
+                            quizId: 12327
+                            content: Cupiditate accusamus harum reprehenderit.
+                        - type: Quiz
+                          id: 12328
+                          content: Vitae odio natus. Ad nulla autem. Ratione et modi.
+                          answers:
+                          - type: Answer
+                            id: 49309
+                            quizId: 12328
+                            content: Illo nihil unde ipsam.
+                          - type: Answer
+                            id: 49310
+                            quizId: 12328
+                            content: Neque incidunt nam consectetur.
+                          - type: Answer
+                            id: 49311
+                            quizId: 12328
+                            content: Dolorum suscipit quasi in.
+                          - type: Answer
+                            id: 49312
+                            quizId: 12328
+                            content: Facere minima est dolorem.
+                        - type: Quiz
+                          id: 12332
+                          content: Ducimus saepe molestias. Minus quaerat molestiae.
+                            Optio qui minima.
+                          answers:
+                          - type: Answer
+                            id: 49325
+                            quizId: 12332
+                            content: Reiciendis dolorem aspernatur sed.
+                          - type: Answer
+                            id: 49326
+                            quizId: 12332
+                            content: Libero et in sit.
+                          - type: Answer
+                            id: 49327
+                            quizId: 12332
+                            content: Debitis voluptates qui corporis.
+                          - type: Answer
+                            id: 49328
+                            quizId: 12332
+                            content: Illum suscipit voluptatem amet.
+                        - type: Quiz
+                          id: 12340
+                          content: Et sit ex. Nisi eligendi velit. Mollitia facere
+                            qui.
+                          answers:
+                          - type: Answer
+                            id: 49357
+                            quizId: 12340
+                            content: Amet tempore natus maiores.
+                          - type: Answer
+                            id: 49358
+                            quizId: 12340
+                            content: Incidunt soluta consequatur sint.
+                          - type: Answer
+                            id: 49359
+                            quizId: 12340
+                            content: Laboriosam quia autem unde.
+                          - type: Answer
+                            id: 49360
+                            quizId: 12340
+                            content: Officiis occaecati nam voluptates.
+  "/api/v1/domains":
+    get:
+      summary: Fetch list of domains
+      parameters:
+      - name: page
+        in: query
+        description: 'Page number. Default: 1'
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+  "/api/v1/users/sign_in":
+    post:
+      summary: Sign in
+      security: []
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Credential is valid:
+                  value:
+                    data:
+                      type: AccessToken
+                      attributes:
+                        accessToken: eyJhbGciOJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ._16TRwEqsZycuaSDMCaQLTJw0cFn1gc0GyPc545dE
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                Email or Password is invalid:
+                  value:
+                    errors:
+                      message: Authentication Failed. Please try again!
+                      messageKey: exceptions.authentication_error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+              example:
+                user:
+                  email: user@example.com
+                  password: your_password
+              required:
+              - email
+              - password
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+components:
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- Bearer: []

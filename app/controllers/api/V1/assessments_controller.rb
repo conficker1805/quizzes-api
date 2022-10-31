@@ -13,7 +13,7 @@ module Api
           expectation: Quizzes::RightAnswerService.new(@quizzes).call
         )
 
-        @assessment.save
+        @assessment.save!
       end
 
       def update
@@ -25,7 +25,8 @@ module Api
         valid_time = Time.current.between?(@assessment.started_at, @assessment.ended_at + 5.seconds)
         valid_time ? @assessment.complete : @assessment.expire
 
-        @assessment.save
+        # Save user's answer even the time is valid or not
+        @assessment.save!
 
         raise Exceptions::AssessmentTimeOut unless valid_time
       end

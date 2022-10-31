@@ -103,6 +103,8 @@ Layout/MultilineHashKeyLineBreaks:
 Layout/MultilineMethodArgumentLineBreaks:
   Enabled: true
   AutoCorrect: true
+  Exclude:
+    - 'spec/requests/api/**/*.rb'
 
 Layout/ParameterAlignment:
   Enabled: true
@@ -225,3 +227,7 @@ RSpec/NamedSubject:
 RSpec/SubjectStub:
   Exclude:
     - spec/shared/**/*.rb
+
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - spec/requests/**/*.rb

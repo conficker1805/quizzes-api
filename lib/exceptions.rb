@@ -2,7 +2,13 @@ module Exceptions
   extend ActiveSupport::Concern
 
   DEFAULT_MSG = 'System Error, please contact admin for more information'.freeze
-  CUSTOM_ERRORS = %w[AuthenticationError MissingToken InvalidToken].freeze
+  CUSTOM_ERRORS = %w[
+    AuthenticationError
+    MissingToken
+    InvalidToken
+    AssessmentTimeOut
+  ].freeze
+
   RAILS_ERRORS = [
     ActionController::ParameterMissing,
     ActiveRecord::RecordNotFound
@@ -14,9 +20,26 @@ module Exceptions
 
   included do
     rescue_from(*(CUSTOM_ERRORS + RAILS_ERRORS), with: :json_error_message)
+    rescue_from(ActiveRecord::RecordInvalid, with: :render_model_errors)
   end
 
   private
+
+    def render_model_errors(exception)
+      resource = exception.record
+      e = resource.errors.errors.first
+      message_key = "exceptions.activerecord.#{resource.class.name.downcase}.#{e.attribute}.#{e.type}"
+
+      render json: {
+               errors: {
+                 attribute: e.attribute,
+                 error: e.type,
+                 message: resource.errors.generate_message(e.attribute, e.type),
+                 messageKey: message_key
+               }
+             },
+             status: :unprocessable_entity
+    end
 
     def json_error_message(exception)
       @translation = exception.class.name.split('::').map(&:underscore).join('.')

@@ -1,4 +1,8 @@
+require 'active_support/core_ext/module'
+
 module RequestHelper
+  delegate :status, to: :response, prefix: true
+
   def response_body(wrap)
     @_response_body ||= JSON.parse(response.body).with_indifferent_access[wrap]
   rescue JSON::ParserError

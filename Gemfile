@@ -18,6 +18,9 @@ gem "puma", "~> 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+gem 'rswag'
+gem 'rswag-api'
+gem 'rswag-ui'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -43,7 +46,7 @@ gem 'kaminari'
 # gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem "rack-cors"
+gem "rack-cors"
 
 # AASM - State machines
 gem 'aasm'
@@ -64,6 +67,7 @@ group :development, :test do
 
   # Unit test for Rails
   gem 'rspec-rails', '~> 6.0.0'
+  gem 'rswag-specs'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers', '~> 5.0'
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'main'

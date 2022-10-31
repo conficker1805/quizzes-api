@@ -1,11 +1,12 @@
-shared_examples 'returns error if can not authenticate user' do
-  context 'when authoriation header is missing' do
+shared_examples 'raises error if access_token invalid' do |method_name, params|
+  context 'when token is missing' do
     before do
       allow(subject).to receive(:authorize_request).and_raise(Exceptions::MissingToken)
     end
 
-    it 'raises error' do
-      do_request
+    it 'raises token missing error' do
+      method(method_name).call(params)
+      expect(response_status).to eq 401
       expect(response_error_message).to eq 'Token is missing.'
     end
   end
@@ -16,7 +17,8 @@ shared_examples 'returns error if can not authenticate user' do
     end
 
     it 'raises error' do
-      do_request
+      method(method_name).call(params)
+      expect(response_status).to eq 401
       expect(response_error_message).to eq 'Token is invalid.'
     end
   end

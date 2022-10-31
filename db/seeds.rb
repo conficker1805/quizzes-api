@@ -13,7 +13,7 @@ end
 
 # Create Users
 User.create!(email: 'kevin.luu1805@gmail.com', name: 'Kevin', password: '123123123')
-User.create!(email: 'user@example.com', name: 'Tony', password: '123123123')
+User.create!(email: 'user@example.com', name: 'Tony', password: 'your_password')
 
 # Create Domains, Quizzes and Answers
 FactoryBot.create_list(:domain, 7, :with_quizzes)
