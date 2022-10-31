@@ -1,0 +1,46 @@
+version: '3.1'
+
+services:
+  redis:
+    image: 'redis:7.0-alpine'
+    command: redis-server
+    volumes:
+      - 'redis:/data'
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    platform: linux/x86_64 # Fix nokogiri error on Mac M1
+    depends_on:
+      - 'db'
+      - 'redis'
+    build: .
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    volumes:
+      - '.:/api'
+
+  db:
+    image: 'postgres:14.0'
+    volumes:
+      - 'db:/var/lib/postgresql/data'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+
+  api:
+    platform: linux/x86_64 # Fix nokogiri error on Mac M1
+    depends_on:
+      - 'redis'
+      - 'db'
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/api'
+      - 'bundle:/usr/local/bundle/gems'
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+
+volumes:
+  redis:
+  db:
+  bundle:

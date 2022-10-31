@@ -81,6 +81,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     Sidekiq::Worker.clear_all
+
     Bullet.start_request if Bullet.enable?
   end
 
