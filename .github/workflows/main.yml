@@ -1,0 +1,87 @@
+env:
+  RUBY_VERSION: 3.1.0
+  POSTGRES_HOST: localhost
+  POSTGRES_USERNAME: postgres
+  POSTGRES_PASSWORD: password
+  POSTGRES_DB: quizzes_api_test
+
+name: CI
+
+on: [push]
+
+jobs:
+  rubocop:
+    name: Run Rubocop
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+      - name: Install Dependencies
+        run: |
+          gem install bundler
+          bundler install
+      - name: Run rubocop
+        run: bundle exec rubocop
+
+  rspec:
+    name: Run Rspec
+    runs-on: ubuntu-18.04
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_USERNAME: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: quizzes_api_test
+        ports: ['5432:5432']
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      redis:
+        image: redis
+        ports: ["6379:6379"]
+      # elasticsearch:
+      #   image: elasticsearch:6.8.8
+      #   ports: ["9200:9200"]
+      #   options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }} # Not needed with a .ruby-version file
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Install PostgreSQL
+        run: sudo apt-get -yqq install libpq-dev
+
+      - name: Gem cache
+        id: cache-bundle
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: bundle-${{ hashFiles('**/Gemfile.lock') }}
+
+      - name: Setup Database
+        env:
+          POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
+          POSTGRES_USERNAME: ${{ env.POSTGRES_USERNAME }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+          # RAILS_TEST_KEY: ${{ secrets.RAILS_TEST_KEY }}
+          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bin/rails db:create db:schema:load
+
+      - name: Run rspec
+        env:
+          POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
+          POSTGRES_USERNAME: ${{ env.POSTGRES_USERNAME }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        run: bundle exec rspec

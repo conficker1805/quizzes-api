@@ -1,0 +1,30 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: <%= ENV['POSTGRES_DB'] %>
+  host: <%= ENV['POSTGRES_HOST'] %>
+  username: <%= ENV['POSTGRES_USERNAME'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  timeout: 5000
+
+development:
+  primary:
+    <<: *default
+  primary_replica:
+    <<: *default
+    replica: true
+
+test:
+  primary:
+    <<: *default
+  primary_replica:
+    <<: *default
+    replica: true
+
+production:
+  primary:
+    <<: *default
+  primary_replica:
+    <<: *default
+    replica: true

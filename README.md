@@ -9,6 +9,7 @@
 - Add API documentation (Swagger)
 - Add Unit Test (coverage 100%)
 - Dockerize Rails app
+- Build CI pipeline with Github actions
 
 [DEMO API & MOCKUP](#demo)
 
