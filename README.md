@@ -10,7 +10,7 @@
 - Add Unit Test (coverage 100%)
 - Dockerize Rails app
 
-[DEMO](#demo)
+[DEMO API & MOCKUP](#demo)
 
 ## Further development
 - Admin UI to create/manage Quizzes
@@ -97,5 +97,5 @@ rails s
 API testing [Swagger](http://localhost:3000/api-docs/index.html)
 
 ## Demo
-Updating...
+[![Watch the video](https://nintendo-power.com/wp-content/uploads/2022/02/1644902932_How-to-download-YouTube-video-to-your-computer.jpg)](https://youtu.be/TdHKShURXRc)
 
