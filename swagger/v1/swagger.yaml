@@ -155,36 +155,15 @@ paths:
                     errors:
                       message: Resource not found.
   "/api/v1/assessments/{id}":
-    parameters:
-    - name: id
-      in: path
-      description: Assessment id
-      required: true
-      schema:
-        type: string
-    - in: body
-      schema:
-        type: object
-        properties:
-          answers:
-            type: array
-        example:
-          answers:
-          - '1':
-            - 1
-            '2':
-            - 2
-            '3':
-            - 3
-            '4':
-            - 4
-            '5':
-            - 5
-        required:
-        - email
-        - password
     put:
       summary: Submit answers for an Assessment
+      parameters:
+      - name: id
+        in: path
+        description: Assessment id
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: OK
@@ -330,6 +309,31 @@ paths:
                             id: 49360
                             quizId: 12340
                             content: Officiis occaecati nam voluptates.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                assessment:
+                  type: object
+                properties:
+                  answers:
+                    type: object
+              example:
+                assessment:
+                  answers:
+                    '1':
+                    - 1
+                    '2':
+                    - 2
+                    '3':
+                    - 3
+                    '4':
+                    - 4
+                    '5':
+                    - 5
+        description: A hash of quizzes as keys and answer ids as value
   "/api/v1/domains":
     get:
       summary: Fetch list of domains

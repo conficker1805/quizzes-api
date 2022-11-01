@@ -109,26 +109,32 @@ RSpec.describe 'api/v1/assessments' do
   end
 
   path '/api/v1/assessments/{id}' do
-    parameter name: :id, in: :path, type: :string, description: 'Assessment id'
-
-    parameter in: :body, schema: {
-      type: :object,
-      properties: {
-        answers: { type: :array },
-      },
-      example: {
-        answers: [
-          '1': [1],
-          '2': [2],
-          '3': [3],
-          '4': [4],
-          '5': [5],
-        ]
-      },
-      required: %w[email password],
-    }
-
     put('Submit answers for an Assessment') do
+      consumes 'application/json'
+
+      parameter name: :id, in: :path, type: :string, description: 'Assessment id'
+      parameter in: :body, schema: {
+                             type: :object,
+                             properties: {
+                               assessment: { type: :object },
+                               properties: {
+                                 answers: { type: :object },
+                               }
+                             },
+                             example: {
+                               assessment: {
+                                 answers: {
+                                   '1': [1],
+                                   '2': [2],
+                                   '3': [3],
+                                   '4': [4],
+                                   '5': [5],
+                                 }
+                               }
+                             },
+                           },
+                description: 'A hash of quizzes as keys and answer ids as value'
+
       response(200, 'OK') do
         example 'application/json', 'Return assessment', {
           data: {

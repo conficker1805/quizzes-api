@@ -66,6 +66,6 @@ class Assessment < ApplicationRecord
       # User may close the browse and does not submit their answer
       # so we have to check and expire it at ended_time + 1 minutes
       num_of_minutes = (TIME_IN_MINUTES + 1).minutes
-      Assessments::ExpireWorker.perform_in(num_of_minutes)
+      Assessments::ExpireWorker.perform_in(num_of_minutes, id)
     end
 end
