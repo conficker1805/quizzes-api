@@ -5,6 +5,7 @@ RSpec.describe 'api/v1/domains' do
     get('Fetch list of domains') do
       response(200, 'OK') do
         consumes 'application/json'
+        security []
 
         parameter name: :page,
                   in: :query,

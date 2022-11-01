@@ -333,6 +333,7 @@ paths:
   "/api/v1/domains":
     get:
       summary: Fetch list of domains
+      security: []
       parameters:
       - name: page
         in: query
