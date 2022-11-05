@@ -1,7 +1,7 @@
 shared_examples 'raises error if access_token invalid' do |method_name, params|
   context 'when token is missing' do
     before do
-      allow(subject).to receive(:authorize_request).and_raise(Exceptions::MissingToken)
+      allow(subject).to receive(:authorize_request).and_raise(Exceptions::Token, 'missing')
     end
 
     it 'raises token missing error' do
@@ -13,7 +13,7 @@ shared_examples 'raises error if access_token invalid' do |method_name, params|
 
   context 'when authoriation header is invalid' do
     before do
-      allow(subject).to receive(:authorize_request).and_raise(Exceptions::InvalidToken)
+      allow(subject).to receive(:authorize_request).and_raise(Exceptions::Token)
     end
 
     it 'raises error' do

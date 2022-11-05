@@ -90,4 +90,3 @@ group :development do
   # Add EXPLAIN ANALYZE to Rails Active Record query objects
   gem 'activerecord-analyze'
 end
-

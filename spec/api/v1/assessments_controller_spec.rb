@@ -2,10 +2,11 @@ require 'rails_helper'
 require 'shared/authenticate_user'
 
 describe Api::V1::AssessmentsController, type: :controller do
+  let(:user) { create(:user) }
+
   before { request.headers.merge! valid_headers_for(user) }
 
   describe 'POST #create' do
-    let(:user) { create(:user) }
     let(:domain) { create(:domain, :with_quizzes) }
 
     def do_request(params = {})
@@ -76,7 +77,6 @@ describe Api::V1::AssessmentsController, type: :controller do
   end
 
   describe 'PUT #update' do
-    let(:user) { create(:user) }
     let(:domain) { create(:domain, :with_quizzes) }
     let!(:assessment) { create(:assessment, user: user, domain: domain) }
 
@@ -143,7 +143,7 @@ describe Api::V1::AssessmentsController, type: :controller do
       end
 
       before do
-        allow(Time).to receive(:current).and_return(1.day.from_now)
+        assessment.update!(started_at: 30.minutes.ago, ended_at: 25.minutes.ago)
       end
 
       it 'saves answers & return errors' do

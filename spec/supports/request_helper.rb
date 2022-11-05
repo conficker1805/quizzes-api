@@ -30,7 +30,7 @@ module RequestHelper
   end
 
   def valid_headers_for(user)
-    token = JWT.encode({ user_id: user.id }, Rails.application.secrets.secret_key_base)
+    token = AuthService.send(:encrypted_token, user)
     { 'Authorization' => "Bearer #{token}" }
   end
 end

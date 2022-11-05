@@ -13,7 +13,7 @@ module Api
           expectation: Quizzes::RightAnswerService.new(@quizzes).call
         )
 
-        @assessment.save!
+        @assessment.save
       end
 
       def update
@@ -26,9 +26,9 @@ module Api
         valid_time ? @assessment.complete : @assessment.expire
 
         # Save user's answer even the time is valid or not
-        @assessment.save!
+        @assessment.save
 
-        raise Exceptions::AssessmentTimeOut unless valid_time
+        raise Exceptions::Assessment, :timeout unless valid_time
       end
 
       private

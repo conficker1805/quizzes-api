@@ -16,11 +16,11 @@ describe Api::V1::BaseController, type: :controller do
 
     context 'when authenticating user failure' do
       before do
-        allow(AuthService).to receive(:auth_request!).and_raise(Exceptions::InvalidToken)
+        allow(AuthService).to receive(:auth_request!).and_raise(Exceptions::Token)
       end
 
       it 'returns error' do
-        expect { subject.authorize_request }.to raise_error(Exceptions::InvalidToken)
+        expect { subject.authorize_request }.to raise_error(Exceptions::Token)
       end
     end
   end

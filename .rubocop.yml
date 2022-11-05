@@ -45,8 +45,16 @@ Layout/LineLength:
     - config/**/*.rb
 
 Layout/ArgumentAlignment:
-  Enabled: true
-  AutoCorrect: true
+  Enabled: false
+
+Layout/FirstHashElementIndentation:
+  Enabled: false
+
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: false
+
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: false
 
 Layout/BlockAlignment:
   Enabled: true
@@ -65,10 +73,6 @@ Layout/FirstArgumentIndentation:
   AutoCorrect: true
 
 Layout/FirstArrayElementIndentation:
-  Enabled: true
-  AutoCorrect: true
-
-Layout/FirstHashElementIndentation:
   Enabled: true
   AutoCorrect: true
 
@@ -100,12 +104,6 @@ Layout/MultilineHashKeyLineBreaks:
   Enabled: true
   AutoCorrect: true
 
-Layout/MultilineMethodArgumentLineBreaks:
-  Enabled: true
-  AutoCorrect: true
-  Exclude:
-    - 'spec/requests/api/**/*.rb'
-
 Layout/ParameterAlignment:
   Enabled: true
   AutoCorrect: true
@@ -118,8 +116,7 @@ Metrics/ClassLength:
   Max: 250
 
 Rails/SkipsModelValidations:
-  Exclude:
-    - 'spec/**/*_spec.rb'
+  Enabled: false
 
 Lint/RedundantCopDisableDirective:
   Enabled: false
@@ -231,3 +228,4 @@ RSpec/SubjectStub:
 RSpec/EmptyExampleGroup:
   Exclude:
     - spec/requests/**/*.rb
+

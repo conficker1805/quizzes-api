@@ -2,15 +2,26 @@
 en:
   api:
     exceptions:
-      authentication_error:
-        message: Authentication Failed. Please try again!
-        status: 401
-      missing_token:
-        message: Token is missing.
-        status: 401
-      invalid_token:
-        message: Token is invalid.
-        status: 401
+      authentication:
+        error:
+          message: Authentication Failed. Please try again!
+          status: 401
+      token:
+        missing:
+          message: Token is missing.
+          status: 401
+        expired:
+          message: Token is expired.
+          status: 401
+        blocked:
+          message: Your account is blocked, please contact admin for more information.
+          status: 401
+        error:
+          message: Token is invalid.
+          status: 401
+      assessment:
+        timeout:
+          message: The assessment has been ended
       action_controller:
         parameter_missing:
           message: Bad request. Invalid parameters.
@@ -18,5 +29,3 @@ en:
         record_not_found:
           status: 404
           message: Resource not found.
-      assessment_time_out:
-        message: The assessment has been ended
